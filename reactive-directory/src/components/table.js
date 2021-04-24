@@ -15,36 +15,43 @@ function ReactTable() {
     handleSearch();
   }, []);
   console.log(items);
+
+  function TableEmployee(props) {
+    console.log('props', props);
+    return (
+      <tbody>
+        <tr>
+          <th scope='row'>{props.data.id.name}</th>
+          <td>
+            <img
+              src={props.data.picture.thumbnail}
+              alt='employee thumbnail'
+            ></img>
+          </td>
+          <td>{props.data.name.first}</td>
+          <td>{props.data.name.last}</td>
+          <td>{props.data.location.city}</td>
+        </tr>
+      </tbody>
+    );
+  }
+
+  const listEmployees = items.map((employee) => {
+    return <TableEmployee key={employee.id.value} data={employee} />;
+  });
+
   return (
     <table className='table'>
       <thead>
         <tr>
           <th scope='col'>#</th>
+          <th scope='col'>Picture</th>
           <th scope='col'>First</th>
           <th scope='col'>Last</th>
-          <th scope='col'>Handle</th>
+          <th scope='col'>City</th>
         </tr>
       </thead>
-      <tbody>
-        <tr>
-          <th scope='row'>1</th>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
-        </tr>
-        <tr>
-          <th scope='row'>2</th>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-        </tr>
-        <tr>
-          <th scope='row'>3</th>
-          <td>Larry</td>
-          <td>the Bird</td>
-          <td>@twitter</td>
-        </tr>
-      </tbody>
+      {listEmployees}
     </table>
   );
 }
