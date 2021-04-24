@@ -6,19 +6,28 @@ import { API } from '../data/API';
 function ReactTable() {
   const [items, setItems] = useState([]);
   const [search, setSearch] = useState([]);
+  const [searchBool, setSearchBool] = useState(false);
   const [sortedField, setSortedField] = useState(null);
 
-  const handleSearch = async () => {
-    const results = await API.search();
-    const resultsData = await results.json();
-    setItems(resultsData.results);
-  };
-
+  //TODO: Not great - reruns the whole API search in order to sort immediately on click, will fix later
   useEffect(() => {
+    const handleSearch = async () => {
+      const results = await API.search();
+      const resultsData = await results.json();
+      const toBeSorted = resultsData.results;
+      if (sortedField === 'First') {
+        toBeSorted.sort((a, b) => {
+          return a.name.first < b.name.first
+            ? -1
+            : a.name.first > b.name.first
+            ? 1
+            : 0;
+        });
+      }
+      setItems(toBeSorted);
+    };
     handleSearch();
-  }, []);
-
-  useEffect(() => {});
+  }, [sortedField]);
 
   function TableEmployee({ data }) {
     return (
@@ -43,11 +52,21 @@ function ReactTable() {
         employee.location.city.toLowerCase().indexOf(value) !== -1
       );
     });
-    console.log(filtered);
-    //TODO: Filter cannot be undone due to overwriting state (using setItems)
-    // setItems(filtered);
+    console.log(sortedField);
+    if (sortedField === 'First') {
+      console.log(filtered);
+      filtered.sort((a, b) => {
+        return a.name.first < b.name.first
+          ? -1
+          : a.name.first > b.name.first
+          ? 1
+          : 0;
+      });
+    }
     setSearch(filtered);
-    //with setSearch get div cannot be a child of tr
+    if (value !== null) {
+      setSearchBool(true);
+    } else setSearchBool(false);
   }
 
   let index = 0;
@@ -86,13 +105,21 @@ function ReactTable() {
                 First
               </button>
             </th>
-            <th scope='col'>Last</th>
-            <th scope='col'>City</th>
+            <th scope='col'>
+              <button type='button' onClick={() => setSortedField('Last')}>
+                Last
+              </button>
+            </th>
+            <th scope='col'>
+              <button type='button' onClick={() => setSortedField('City')}>
+                City
+              </button>
+            </th>
           </tr>
         </thead>
         <tbody>
           {search.length !== 0 && searchEmployees}
-          {search.length === 0 && listEmployees}
+          {search.length === 0 && searchBool === false && listEmployees}
         </tbody>
       </table>
     </>
