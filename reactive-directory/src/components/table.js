@@ -17,11 +17,10 @@ function ReactTable() {
   console.log(items);
 
   function TableEmployee(props) {
-    console.log('props', props);
     return (
       <tbody>
         <tr>
-          <th scope='row'>{props.data.id.name}</th>
+          <th scope='row'>{props.data.index}</th>
           <td>
             <img
               src={props.data.picture.thumbnail}
@@ -35,9 +34,11 @@ function ReactTable() {
       </tbody>
     );
   }
-
+  let index = 0;
   const listEmployees = items.map((employee) => {
-    return <TableEmployee key={employee.id.value} data={employee} />;
+    index += 1;
+    Object.assign(employee, { index: index });
+    return <TableEmployee data={employee} />;
   });
 
   return (
