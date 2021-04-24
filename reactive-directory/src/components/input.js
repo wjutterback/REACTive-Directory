@@ -1,18 +1,24 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-function inputField() {
+class Input extends Component {
+  handleInputChange({ target }) {
+    let value = target.value;
+    console.log(value);
+  }
 
-  return (
-    <div className='form-outline'>
-      <input
-        type='search'
-        id='form1'
-        className='form-control'
-        placeholder='Search Employees'
-        aria-label='Search'
-      />
-    </div>
-  );
+  render() {
+    return (
+      <div className='form-outline'>
+        <input
+          type='search'
+          id='form1'
+          className='form-control'
+          placeholder='Search Employees'
+          aria-label='Search'
+          onChange={this.handleInputChange}
+        />
+      </div>
+    );
+  }
 }
-
-export default inputField;
+export default Input;
