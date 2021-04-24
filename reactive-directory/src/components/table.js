@@ -7,13 +7,14 @@ function ReactTable() {
 
   const handleSearch = async () => {
     const results = await API.search();
-    console.log(results.json());
-    // setItems([message]);
+    const resultsData = await results.json();
+    setItems(resultsData.results);
   };
 
   useEffect(() => {
     handleSearch();
   }, []);
+  console.log(items);
   return (
     <table className='table'>
       <thead>
