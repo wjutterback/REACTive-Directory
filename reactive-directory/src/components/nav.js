@@ -4,7 +4,7 @@ function navHeader() {
   return (
     <div className='container'>
       <div className='jumbotron '>
-        <h1>Employee Directory</h1>
+        <h1 style={{ textAlign: 'center' }}>Employee Directory</h1>
       </div>
     </div>
   );

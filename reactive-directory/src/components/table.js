@@ -1,8 +1,21 @@
 import React from 'react';
+import { useState, useEffect } from 'react';
+import { API } from '../data/API';
 
-function reactTable() {
+function ReactTable() {
+  const [items, setItems] = useState([]);
+
+  const handleSearch = async () => {
+    const results = await API.search();
+    console.log(results.json());
+    // setItems([message]);
+  };
+
+  useEffect(() => {
+    handleSearch();
+  }, []);
   return (
-    <table class='table'>
+    <table className='table'>
       <thead>
         <tr>
           <th scope='col'>#</th>
@@ -34,4 +47,4 @@ function reactTable() {
     </table>
   );
 }
-export default reactTable;
+export default ReactTable;
