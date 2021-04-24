@@ -33,6 +33,7 @@ function ReactTable() {
       </tr>
     );
   }
+
   function handleInputChange({ target }) {
     let value = target.value.toLowerCase();
     let filtered = items.filter((employee) => {
@@ -50,17 +51,14 @@ function ReactTable() {
   }
 
   let index = 0;
-  let listEmployees;
-  if (search.length !== 0) {
-    return (listEmployees = search.map((employee) => {
-      index += 1;
-      Object.assign(employee, { index: index });
-      return <TableEmployee key={employee.cell} data={employee} />;
-    }));
-  }
+  let searchEmployees = search.map((employee) => {
+    index += 1;
+    Object.assign(employee, { index: index });
+    return <TableEmployee key={employee.cell} data={employee} />;
+  });
 
   index = 0;
-  listEmployees = items.map((employee) => {
+  let listEmployees = items.map((employee) => {
     index += 1;
     Object.assign(employee, { index: index });
     return <TableEmployee key={employee.cell} data={employee} />;
@@ -92,7 +90,10 @@ function ReactTable() {
             <th scope='col'>City</th>
           </tr>
         </thead>
-        <tbody> {listEmployees}</tbody>
+        <tbody>
+          {search.length !== 0 && searchEmployees}
+          {search.length === 0 && listEmployees}
+        </tbody>
       </table>
     </>
   );
