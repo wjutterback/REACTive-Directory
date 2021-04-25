@@ -102,17 +102,41 @@ function ReactTable() {
             <th scope='col'>#</th>
             <th scope='col'>Picture</th>
             <th scope='col'>
-              <button type='button' onClick={() => setSortedField('First')}>
+              <button
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  fontWeight: 'bold',
+                }}
+                type='button'
+                onClick={() => setSortedField('First')}
+              >
                 First
               </button>
             </th>
             <th scope='col'>
-              <button type='button' onClick={() => setSortedField('Last')}>
+              <button
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  fontWeight: 'bold',
+                }}
+                type='button'
+                onClick={() => setSortedField('Last')}
+              >
                 Last
               </button>
             </th>
             <th scope='col'>
-              <button type='button' onClick={() => setSortedField('City')}>
+              <button
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  fontWeight: 'bold',
+                }}
+                type='button'
+                onClick={() => setSortedField('City')}
+              >
                 City
               </button>
             </th>
