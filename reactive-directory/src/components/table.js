@@ -1,33 +1,35 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { API } from '../data/API';
-// import Input from './input';
 
 function ReactTable() {
   const [items, setItems] = useState([]);
   const [search, setSearch] = useState([]);
   const [searchBool, setSearchBool] = useState(false);
-  const [sortedField, setSortedField] = useState(null);
+  const [sortedField, setSortedField] = useState();
 
-  //TODO: Not great - reruns the whole API search in order to sort immediately on click, will fix later
   useEffect(() => {
     const handleSearch = async () => {
       const results = await API.search();
       const resultsData = await results.json();
       const toBeSorted = resultsData.results;
-      if (sortedField === 'First') {
-        toBeSorted.sort((a, b) => {
-          return a.name.first < b.name.first
-            ? -1
-            : a.name.first > b.name.first
-            ? 1
-            : 0;
-        });
-      }
       setItems(toBeSorted);
     };
     handleSearch();
-  }, [sortedField]);
+  }, []);
+
+  useEffect(() => {
+    if (sortedField === 'First') {
+      items.sort((a, b) => {
+        return a.name.first < b.name.first
+          ? -1
+          : a.name.first > b.name.first
+          ? 1
+          : 0;
+      });
+      setItems(items);
+    }
+  }, [items, sortedField]);
 
   function TableEmployee({ data }) {
     return (
@@ -52,7 +54,6 @@ function ReactTable() {
         employee.location.city.toLowerCase().indexOf(value) !== -1
       );
     });
-    console.log(sortedField);
     if (sortedField === 'First') {
       console.log(filtered);
       filtered.sort((a, b) => {
