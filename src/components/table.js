@@ -20,16 +20,17 @@ function ReactTable() {
 
   useEffect(() => {
     if (sortedField === 'First') {
-      items.sort((a, b) => {
+      const sortedItems = [...items];
+      sortedItems.sort((a, b) => {
         return a.name.first < b.name.first
           ? -1
           : a.name.first > b.name.first
           ? 1
           : 0;
       });
-      setItems(items);
+      setItems(sortedItems);
     }
-  }, [items, sortedField]);
+  }, [sortedField]);
 
   function TableEmployee({ data }) {
     return (
