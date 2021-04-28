@@ -30,6 +30,17 @@ function ReactTable() {
       });
       setItems(sortedItems);
     }
+    if (searchBool === true) {
+      const sortedItems = [...search];
+      sortedItems.sort((a, b) => {
+        return a.name.first < b.name.first
+          ? -1
+          : a.name.first > b.name.first
+          ? 1
+          : 0;
+      });
+      setSearch(sortedItems);
+    }
   }, [sortedField]);
 
   function TableEmployee({ data }) {
